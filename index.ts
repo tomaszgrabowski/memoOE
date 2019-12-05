@@ -1,34 +1,9 @@
-export class Tile {
-    constructor (
-        private value: string = '',
-        private visible: boolean = false,
-        private locked: boolean = false
-    ) {
-    }
+import { Program } from './program';
 
-    public toggleVisible = (): void => {
-        if ( this.locked === false ) {
-            this.visible = !this.visible;
-        }
-    };
-
-    public setLocked = (): void => {
-        this.locked = true;
-    };
+console.log( 'Lets play a game...' );
+const gameElement: HTMLElement | null = document.getElementById( 'game' );
+if ( gameElement !== null ) {
+    const app = new Program( gameElement );
+    app.run();
 }
 
-export class Board {
-    private tiles: Tile[] = [];
-
-    constructor (private size: number) {
-        for ( let i = 0; i <= 20; i++ ) {
-            const tile = new Tile(i.toString());
-            this.tiles.push(tile);
-        }
-    }
-}
-
-export class Program{
-    run = () => new Board(20);
-
-}

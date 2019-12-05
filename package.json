@@ -4,9 +4,16 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "start": "tsc --watch",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "concurrently 'tsc --watch' 'parcel index.html'"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "systemjs": "^6.1.7"
+  },
+  "devDependencies": {
+    "concurrently": "^5.0.0",
+    "http-server": "^0.12.0",
+    "lite-dev-server": "^3.2.7"
+  }
 }
