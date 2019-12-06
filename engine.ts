@@ -7,11 +7,11 @@ export class Engine {
     private static counterObservers: ObserverDelegateFunc[] = [];
     private static infoObservers: ObserverDelegateFunc[] = [];
 
-    public static subscribeToCounter = ( observerDelegate: ObserverDelegateFunc ) => {
+    public static subscribeToCounter = ( observerDelegate: ObserverDelegateFunc ): void => {
         Engine.counterObservers.push( observerDelegate );
     };
 
-    public static subscribeToInfo = ( observerDelegate: ObserverDelegateFunc ) => {
+    public static subscribeToInfo = ( observerDelegate: ObserverDelegateFunc ): void => {
         Engine.infoObservers.push( observerDelegate );
     };
 
@@ -20,7 +20,7 @@ export class Engine {
         Engine.compareClickedTiles( tile );
     };
 
-    private static compareClickedTiles ( tile: Tile ) {
+    private static compareClickedTiles = ( tile: Tile ): void => {
         tile.reveal();
         if ( Engine.tile === null ) {
             Engine.tile = tile;
@@ -30,12 +30,12 @@ export class Engine {
                 Engine.tile = null;
             } else {
                 Engine.infoObservers.forEach(func => func( ' Looser!!!'));
-                setTimeout( () => this.hideTiles( tile ), 1000 );
+                setTimeout( () => Engine.hideTiles( tile ), 1000 );
             }
         }
-    }
+    };
 
-    private static hideTiles = ( tile: Tile ) => {
+    private static hideTiles = ( tile: Tile ): void => {
         tile.hide();
         if ( Engine.tile ) {
             Engine.tile.hide();
@@ -43,16 +43,16 @@ export class Engine {
         }
     };
 
-    private static incrementCounterAndSendUpdate () {
+    private static incrementCounterAndSendUpdate = () : void => {
         Engine.clickCounter++;
         Engine.updateCounterObservers();
-    }
+    };
 
-    private static updateCounterObservers () {
-        Engine.counterObservers.forEach( func => func( this.getAttemptsNumber() ) );
-    }
+    private static updateCounterObservers = (): void => {
+        Engine.counterObservers.forEach( func => func( Engine.getAttemptsNumber() ) );
+    };
 
-    private static getAttemptsNumber () {
+    private static getAttemptsNumber = (): string =>  {
         return Math.floor( Engine.clickCounter / 2 ).toString();
     }
 }

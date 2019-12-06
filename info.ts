@@ -6,7 +6,7 @@ export class Info {
         Engine.subscribeToInfo( this.update );
     }
 
-    private update: ObserverDelegateFunc = ( payload: string ) => {
+    private update: ObserverDelegateFunc = ( payload: string ): void => {
         this.info.classList.add( 'info' );
         this.info.innerText = `${payload}`;
         setTimeout( () => {

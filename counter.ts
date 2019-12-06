@@ -6,7 +6,7 @@ export class Counter {
         Engine.subscribeToCounter( this.update );
     }
 
-    private update: ObserverDelegateFunc = ( payload: string ) => {
+    private update: ObserverDelegateFunc = ( payload: string ): void => {
         this.counter.innerText = `Attempts: ${ payload }.`;
     };
 }
