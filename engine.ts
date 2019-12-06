@@ -5,9 +5,14 @@ export class Engine {
     private static tile: Tile | null = null;
 
     private static counterObservers: ObserverDelegateFunc[] = [];
+    private static infoObservers: ObserverDelegateFunc[] = [];
 
-    public static subscribe = ( observerDelegate: ObserverDelegateFunc ) => {
+    public static subscribeToCounter = ( observerDelegate: ObserverDelegateFunc ) => {
         Engine.counterObservers.push( observerDelegate );
+    };
+
+    public static subscribeToInfo = ( observerDelegate: ObserverDelegateFunc ) => {
+        Engine.infoObservers.push( observerDelegate );
     };
 
     public static checkTile = ( tile: Tile ): void => {
@@ -21,8 +26,10 @@ export class Engine {
             Engine.tile = tile;
         } else {
             if ( tile.value === Engine.tile.value ) {
+                Engine.infoObservers.forEach(func => func( ' Direct hit!!!'));
                 Engine.tile = null;
             } else {
+                Engine.infoObservers.forEach(func => func( ' Looser!!!'));
                 setTimeout( () => this.hideTiles( tile ), 1000 );
             }
         }
@@ -38,10 +45,10 @@ export class Engine {
 
     private static incrementCounterAndSendUpdate () {
         Engine.clickCounter++;
-        Engine.update();
+        Engine.updateCounterObservers();
     }
 
-    private static update () {
+    private static updateCounterObservers () {
         Engine.counterObservers.forEach( func => func( this.getAttemptsNumber() ) );
     }
 
