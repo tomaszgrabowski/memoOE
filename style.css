@@ -14,8 +14,10 @@ h1{
     text-align: center;
 }
 #info{
+    position: relative;
+    top: -270px;
     text-align: center;
-    animation: show 1s forwards;
+    font-size: 30px;
 }
 .inline {
     display: inline-block;
@@ -34,12 +36,23 @@ h1{
     opacity: 0;
 }
 
-.revealed img, .revealed span {
+.revealed img{
     animation: show .5s forwards;
 }
 
-.hidden img, .hidden span {
+.hidden img {
     animation: hide .5s forwards;
+}
+
+.hidden #info{
+    opacity: 0;
+}
+
+.info {
+    animation: info 1.5s;
+    backface-visibility: hidden;
+    animation-delay: .5s;
+    animation-fill-mode: backwards;
 }
 
 @keyframes show {
@@ -67,6 +80,19 @@ h1{
     100% {
         opacity: 0;
         transform: scale(0);
+    }
+}
+
+@keyframes info {
+    0% {
+        transform: scale(1);
+        opacity: 0;
+        color: black;
+    }
+    100% {
+        transform: scale(4);
+        opacity: 1;
+        color: white;
     }
 }
 
