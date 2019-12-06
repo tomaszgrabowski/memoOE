@@ -2,7 +2,7 @@ import { Tile } from './tile';
 
 export class Engine {
     public static clickCounter: number = 0;
-    private static tile: Tile | null = null;
+    private static storedTile: Tile | null = null;
 
     private static counterObservers: ObserverDelegateFunc[] = [];
 
@@ -16,20 +16,33 @@ export class Engine {
     };
 
     private static compareClikedTiles ( tile: Tile ) {
-        if ( Engine.tile === null ) {
-            tile.reveal();
-            Engine.tile = tile;
-        } else {
-            if ( tile.value === Engine.tile.value ) {
-                tile.reveal();
-                console.log( 'HIT!' );
-            } else {
-                Engine.tile.hide();
-                tile.hide();
-                console.log( 'FAIL!' );
-                Engine.tile = null;
+        tile.reveal();
+        if ( Engine.storedTile && tile.value !== Engine.storedTile.value ) {
+            Engine.hideTilesAfterGivenMiliseconds( tile );
+        }
+        if ( Engine.storedTile && tile.value === Engine.storedTile.value ) {
+            Engine.resetStoredTile();
+        }
+        Engine.storeTileIfNotExists( tile );
+    }
+
+    private static hideTilesAfterGivenMiliseconds ( tile: Tile ) {
+        setTimeout( () => {
+            tile.hide();
+            if ( Engine.storedTile ) {
+                Engine.storedTile.hide();
+                Engine.storedTile = null;
             }
-            Engine.tile = null;
+        }, 1000 );
+    }
+
+    private static resetStoredTile () {
+        Engine.storedTile = null;
+    }
+
+    private static storeTileIfNotExists ( tile: Tile ) {
+        if ( Engine.storedTile === null ) {
+            Engine.storedTile = tile;
         }
     }
 
@@ -39,7 +52,11 @@ export class Engine {
     }
 
     private static update () {
-        Engine.counterObservers.forEach( func => func( Engine.clickCounter.toString() ) );
+        Engine.counterObservers.forEach( func => func( this.getAttemptsNumber() ) );
+    }
+
+    private static getAttemptsNumber () {
+        return Math.floor( Engine.clickCounter / 2 ).toString();
     }
 }
 

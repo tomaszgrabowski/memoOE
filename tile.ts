@@ -3,6 +3,7 @@ import { Engine } from './engine';
 export class Tile {
 
     private div: HTMLElement | null = null;
+    private visible: boolean = false;
 
     private cssClasses: string[] = ['inline', 'tile', 'hidden'];
 
@@ -26,6 +27,7 @@ export class Tile {
     public reveal = (): void => {
         if ( this.div ) {
             this.div.classList.add( 'revealed' );
+            this.visible = true;
         }
 
     };
@@ -33,14 +35,15 @@ export class Tile {
     public hide = (): void => {
         if ( this.div ) {
             this.div.classList.remove( 'revealed' );
+            this.visible = false;
         }
 
     };
 
     private onClick = (): void => {
-        console.log( 'click' );
-        Engine.checkTile( this );
-
+        if ( this.visible === false ){
+            Engine.checkTile( this );
+        }
     };
 }
 
