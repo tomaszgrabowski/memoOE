@@ -2,7 +2,7 @@ import { Tile } from './tile';
 
 export class Engine {
     public static clickCounter: number = 0;
-    private static storedTile: Tile | null = null;
+    private static tile: Tile | null = null;
 
     private static counterObservers: ObserverDelegateFunc[] = [];
 
@@ -12,39 +12,29 @@ export class Engine {
 
     public static checkTile = ( tile: Tile ): void => {
         Engine.incrementCounterAndSendUpdate();
-        Engine.compareClikedTiles( tile );
+        Engine.compareClickedTiles( tile );
     };
 
-    private static compareClikedTiles ( tile: Tile ) {
+    private static compareClickedTiles ( tile: Tile ) {
         tile.reveal();
-        if ( Engine.storedTile && tile.value !== Engine.storedTile.value ) {
-            Engine.hideTilesAfterGivenMiliseconds( tile );
-        }
-        if ( Engine.storedTile && tile.value === Engine.storedTile.value ) {
-            Engine.resetStoredTile();
-        }
-        Engine.storeTileIfNotExists( tile );
-    }
-
-    private static hideTilesAfterGivenMiliseconds ( tile: Tile ) {
-        setTimeout( () => {
-            tile.hide();
-            if ( Engine.storedTile ) {
-                Engine.storedTile.hide();
-                Engine.storedTile = null;
+        if ( Engine.tile === null ) {
+            Engine.tile = tile;
+        } else {
+            if ( tile.value === Engine.tile.value ) {
+                Engine.tile = null;
+            } else {
+                setTimeout( () => this.hideTiles( tile ), 1000 );
             }
-        }, 1000 );
-    }
-
-    private static resetStoredTile () {
-        Engine.storedTile = null;
-    }
-
-    private static storeTileIfNotExists ( tile: Tile ) {
-        if ( Engine.storedTile === null ) {
-            Engine.storedTile = tile;
         }
     }
+
+    private static hideTiles = ( tile: Tile ) => {
+        tile.hide();
+        if ( Engine.tile ) {
+            Engine.tile.hide();
+            Engine.tile = null;
+        }
+    };
 
     private static incrementCounterAndSendUpdate () {
         Engine.clickCounter++;
