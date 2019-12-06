@@ -7,15 +7,9 @@ export class Tile {
     private cssClasses: string[] = ['inline', 'tile', 'hidden'];
 
     constructor (
-        public value: string = '',
-        public visible: boolean = false,
-        public locked: boolean = false
+        public value: string = ''
     ) {
     }
-
-    public setLocked = (): void => {
-        this.locked = true;
-    };
 
     public render = (): HTMLElement => {
         this.div = document.createElement( 'div' );
@@ -29,19 +23,24 @@ export class Tile {
         return this.div;
     };
 
-    private reveal = (): void => {
-        if ( this.visible ) {
-            if ( this.div ) {
-                this.div.classList.add( 'revealed' );
-            }
+    public reveal = (): void => {
+        if ( this.div ) {
+            this.div.classList.add( 'revealed' );
         }
+
+    };
+
+    public hide = (): void => {
+        if ( this.div ) {
+            this.div.classList.remove( 'revealed' );
+        }
+
     };
 
     private onClick = (): void => {
         console.log( 'click' );
-        this.visible = true;
-        Engine.compareTileValue( this );
-        this.reveal();
+        Engine.checkTile( this );
+
     };
 }
 
