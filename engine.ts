@@ -26,10 +26,10 @@ export class Engine {
             Engine.tile = tile;
         } else {
             if ( tile.value === Engine.tile.value ) {
-                Engine.infoObservers.forEach(func => func( ' Direct hit!!!'));
+                Engine.infoObservers.forEach(func => func( ' Hit!!!'));
                 Engine.tile = null;
             } else {
-                Engine.infoObservers.forEach(func => func( ' Looser!!!'));
+                Engine.infoObservers.forEach(func => func( ' Fail!!!'));
                 setTimeout( () => Engine.hideTiles( tile ), 1000 );
             }
         }
