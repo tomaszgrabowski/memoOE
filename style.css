@@ -21,13 +21,15 @@ h1{
     position: relative;
     text-align: center;
 }
-#info{
+#info-container{
     position: absolute;
     top: 50%;
     width: 100%;
+    overflow-x: hidden;
+}
+#info{
     text-align: center;
-    font-size: 30px;
-    overflow: hidden;
+    font-size: 60px;
 }
 .inline {
     display: inline-block;
@@ -105,7 +107,7 @@ h1{
 
 @keyframes info {
     0% {
-        transform: scale(1);
+        transform: scale(1,1);
         opacity: 0;
         color: red;
     }
@@ -114,7 +116,7 @@ h1{
         filter: blur(0px);
     }
     100% {
-        transform: scale(4);
+        transform: scale(2,1.5);
         opacity: 1;
         color: white;
         filter: blur(2px);

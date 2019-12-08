@@ -2,7 +2,7 @@ import { Engine, ObserverDelegateFunc } from './engine';
 
 export class Info {
     constructor ( private info: HTMLElement ) {
-        this.update( 'Let the game begin!!!' );
+        this.update( 'Start!!!' );
         Engine.subscribeToInfo( this.update );
     }
 
