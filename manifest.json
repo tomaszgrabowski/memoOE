@@ -1,0 +1,17 @@
+{
+  "short_name": "MemoOE",
+  "name": "MemoOE",
+  "icons": [
+    {
+      "src": "/svg/gift.png",
+      "type": "image/svg",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#ffffff",
+  "orientation": "portrait"
+}
